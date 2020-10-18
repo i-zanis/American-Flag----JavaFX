@@ -1,5 +1,3 @@
-package moduleSettings;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,7 +28,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {                   // Primary Container(window) of the app
         Button flagButton = new Button(createFlag("*", "=")); // Create a button object
-        flagButton.setStyle("-fx-text-fill: #0000ff");        // Text color blue
+        //flagButton.setStyle("-fx-text-fill: #0000ff");        // Text color blue
         StackPane pane = new StackPane();                     // Container class that lays children like a stack
         pane.getChildren().add(flagButton);                   // add button to container class
         Scene scene = new Scene(pane, 500, 200);        // Place the button in the scene container
