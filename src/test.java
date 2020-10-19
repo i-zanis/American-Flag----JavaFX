@@ -1,4 +1,3 @@
-import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -12,17 +11,21 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
-
 /**
- * Name:        Ioannis Lafazanis
- * Student ID:  21425229
- * Course Code: CP4CS61E
- * Date:        08/10/2020
- * Project Name: Practical Activity 1
+ * Name:          Ioannis Lafazanis
+ * Student ID:    21425229
+ * Course Code:   CP4CS61E
+ * Date:          18/10/2020
+ * Project Name:  Practical Activity 1
+ * Module Leader: Dr Ikram Rehman
  *
- * Last year I was overwhelmed by TKinter, this year I looked back to the slides and I smiled.
- * This year I will try to make up for what I did not do.
+ * American Flag Graphic with horizontal animation created in JavaFX
+ * Horizontal animation on mouse press
+ * Pauses on mouse-dragging
+ *
+ * Last year TKinter was presented in the lecture and I was overwhelmed.
+ * This year I looked back to the slides and I smiled.
+ * I will try to make up for what I did not do.
  *
  * Made on OpenJDK14.
  * Please download "javafx-sdk-11.0" and add all the jar-files in
@@ -33,6 +36,7 @@ import java.awt.*;
 
 public class test extends Application {
     public static void main(String[] args) {
+
         launch(args); // launches the Application
     }
 
@@ -42,7 +46,7 @@ public class test extends Application {
         int flagWidth = 800;
         int flagHeight = 480;
 
-        // red rectangle height = flagItems height/13.0
+        // red rectangle smaller in proportion to the larger rectangle
         double rectangleHeight = flagHeight / 13.0;
         // starting point in relation to the window.
         // 0,0 in the upper-left corner.
@@ -57,8 +61,8 @@ public class test extends Application {
         }
 
         // Create the blue rectangle of the flag
-        // Width = about half flagWidth
-        // Height of rectangleHeight*7
+        // Width = about half(2.1) flagWidth
+        // Height of blue rectangle * 7
         Rectangle blueRectangle = new Rectangle(0, 0, flagWidth / 2.1, rectangleHeight * 7);
         blueRectangle.setFill(Color.BLUE);          // set color to blue
         flagItems.getChildren().add(blueRectangle); // add blueRectangle to flagItems group
@@ -87,34 +91,32 @@ public class test extends Application {
             }
             rectangleY += starSize / 1.3;    // distance between each star in column - Y coordinate
         }
-        Image flagIcon = new Image("americanflag.png");// Create an image object
 
-
-        Path path = new Path();
-        path.getElements().add(new MoveTo(680, 240));//first value how far on the right of the screen
-        path.getElements().add(new LineTo(400, 240));// probably how far on the left it starts
-        PathTransition pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(2000));
+        // Animation
+        Path path = new Path();                               // Creates the path for the movement
+        path.getElements().add(new MoveTo(680, 240));   // first value distance traveled horizontally
+        path.getElements().add(new LineTo(400, 240));   // (400) starting point in the window
+        PathTransition pathTransition = new PathTransition(); // Creates a path animation
+        pathTransition.setDuration(Duration.millis(100));     // Duration of the animation from start to finish
         pathTransition.setPath(path);
         pathTransition.setNode(flagItems);
-        pathTransition.setCycleCount(Timeline.INDEFINITE);
-        pathTransition.setAutoReverse(true);
+        pathTransition.setCycleCount(Timeline.INDEFINITE);    // Sets the animation to unlimited time.
+        pathTransition.setAutoReverse(true);                  // Animation auto-reverses point A -> B, B -> A
+        // controls with lambda expression
+        flagItems.setOnMouseClicked(e -> pathTransition.play());
+        flagItems.setOnMouseDragged(e -> pathTransition.pause());
 
 
-//need pause
-        flagItems.setOnMouseClicked(me -> pathTransition.play());
-        flagItems.setOnMouseDragged(x -> pathTransition.pause());
-
-
-        Scene scene = new Scene(flagItems,1000, 500);              // Add the flagItems to a scene container
-        primaryStage.setScene(scene);                    // Place the scene in the stage
-        primaryStage.setTitle("Practical Activity 1");   // Set the title of the window
-        primaryStage.getIcons().add(flagIcon);           // Add the icon to the stage(window)
-        primaryStage.show();                             // Display the stage(window)
+        Scene scene = new Scene(flagItems,1000, 500);// Add the flagItems to a scene container
+        primaryStage.setScene(scene);                      // Place the scene in the stage
+        primaryStage.setTitle("Practical Activity 1");     // Set the title of the window
+        Image flagIcon = new Image("americanflag.png");  // Create an image object
+        primaryStage.getIcons().add(flagIcon);             // Add the icon to the stage(window)
+        primaryStage.show();                               // Display the stage(window)
     }
 
     /**
-     * Method that creates a star from the Polygon class.
+     * Method that creates a star from the Polygon class
      */
     private Polygon createStar(double centerX, double centerY, double size) {
         Polygon star = new Polygon();

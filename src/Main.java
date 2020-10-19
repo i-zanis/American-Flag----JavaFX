@@ -32,7 +32,6 @@ public class Main extends Application {
         StackPane pane = new StackPane();                     // Container class that lays children like a stack
         pane.getChildren().add(flagButton);                   // add button to container class
         Scene scene = new Scene(pane, 500, 200);        // Place the button in the scene container
-        System.out.println("\u001B[30m\u001b[41;1m\u001b[44;1m fsdsfsfsf");
         primaryStage.setTitle("PracticalActivity1_FX");       // Set the title of the window
         primaryStage.setScene(scene);                         // Place the scene in the stage
         primaryStage.show();                                  // Display the stage(window)
