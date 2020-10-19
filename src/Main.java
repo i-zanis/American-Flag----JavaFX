@@ -32,6 +32,7 @@ public class Main extends Application {
         StackPane pane = new StackPane();                     // Container class that lays children like a stack
         pane.getChildren().add(flagButton);                   // add button to container class
         Scene scene = new Scene(pane, 500, 200);        // Place the button in the scene container
+        System.out.println("\u001B[30m\u001b[41;1m\u001b[44;1m fsdsfsfsf");
         primaryStage.setTitle("PracticalActivity1_FX");       // Set the title of the window
         primaryStage.setScene(scene);                         // Place the scene in the stage
         primaryStage.show();                                  // Display the stage(window)
@@ -62,10 +63,10 @@ public class Main extends Application {
             if (i % 2 == 0) arraySpaceFirst[i] = space;
             else arraySpaceFirst[i] = firstString;
         }
-
         //casts the Array into a String object, joins the array and removes the comma between every character
         String evenLine = String.join("", arrayAsteriskFirst).replace(",", "")
                 + String.format("%40s", "").replace(" ", secondString);
+
         //casts the Array into a String object, joins the array and removes the comma between every character
         String oddLine = String.join("", arraySpaceFirst)
                 //converts empty space into the secondString
