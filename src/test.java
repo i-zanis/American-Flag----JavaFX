@@ -91,23 +91,22 @@ public class test extends Application {
 
 
         Path path = new Path();
-        path.getElements().add(new MoveTo(450, 240));
-        path.getElements().add(new LineTo(400, 240));
+        path.getElements().add(new MoveTo(680, 240));//first value how far on the right of the screen
+        path.getElements().add(new LineTo(400, 240));// probably how far on the left it starts
         PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(2000));
         pathTransition.setPath(path);
         pathTransition.setNode(flagItems);
         pathTransition.setCycleCount(Timeline.INDEFINITE);
         pathTransition.setAutoReverse(true);
-        pathTransition.play();
 
 
-
+//need pause
         flagItems.setOnMouseClicked(me -> pathTransition.play());
+        flagItems.setOnMouseDragged(x -> pathTransition.pause());
 
 
-
-        Scene scene = new Scene(flagItems);              // Add the flagItems to a scene container
+        Scene scene = new Scene(flagItems,1000, 500);              // Add the flagItems to a scene container
         primaryStage.setScene(scene);                    // Place the scene in the stage
         primaryStage.setTitle("Practical Activity 1");   // Set the title of the window
         primaryStage.getIcons().add(flagIcon);           // Add the icon to the stage(window)
