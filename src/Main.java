@@ -1,21 +1,31 @@
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
- * Name:        Ioannis Lafazanis
- * Student ID:  21425229
- * Course Code: CP4CS61E
- * Date:        08/10/2020
- * Project Name: PracticalActivity1
+ * American Flag Graphic designed with basic geometry and horizontal animation created in JavaFX.
+ * Horizontal animation on mouse press
+ * Pauses on mouse-dragging
  *
- * Experimental attempt to create an American flag design with any type of character.
- * The program is intended to be improved in the future. With that in mind I decided
- * to store the values to reduce redundant work.
+ *  * Name:          Ioannis Lafazanis
+ *  * Student ID:    21425229
+ *  * Course Code:   CP40061E - Programming
+ *  * Date:          18/10/2020
+ *  * Project Name:  Practical Activity 1
+ *  * Module Leader: Dr Ikram Rehman
  *
- * Last year I was overwhelmed by TKinter but this year I will try to make up.
+ * Last year TKinter was presented in the lecture and I was overwhelmed.
+ * This year I looked back to the slides and I smiled.
+ * I will try to make up for what I did not do.
  *
  * Made on OpenJDK14.
  * Please download "javafx-sdk-11.0" and add all the jar-files in
@@ -25,63 +35,102 @@ import javafx.stage.Stage;
  */
 
 public class Main extends Application {
-    @Override
-    public void start(Stage primaryStage) {                   // Primary Container(window) of the app
-        Button flagButton = new Button(createFlag("*", "=")); // Create a button object
-        //flagButton.setStyle("-fx-text-fill: #0000ff");        // Text color blue
-        StackPane pane = new StackPane();                     // Container class that lays children like a stack
-        pane.getChildren().add(flagButton);                   // add button to container class
-        Scene scene = new Scene(pane, 500, 200);        // Place the button in the scene container
-        primaryStage.setTitle("PracticalActivity1_FX");       // Set the title of the window
-        primaryStage.setScene(scene);                         // Place the scene in the stage
-        primaryStage.show();                                  // Display the stage(window)
+    public static void main(String[] args) {
+
+        launch(args); // launches the Application
+    }
+
+    @Override // start() is abstract and has to be overridden
+    public void start(Stage primaryStage) {
+        Group flagItems = new Group();
+        int flagWidth = 800;
+        int flagHeight = 480;
+
+        // red rectangle smaller in proportion to the larger rectangle
+        double rectangleHeight = flagHeight / 13.0;
+        // starting point in relation to the window.
+        // 0,0 in the upper-left corner.
+        double rectangleX = 0, rectangleY = 0;
+
+        //create 7 red rectangles (stripes)
+        for (int i = 0; i < 7; i++) {
+            Rectangle rectangle = new Rectangle(rectangleX, rectangleY, flagWidth, rectangleHeight);
+            rectangle.setFill(Color.RED);           //stripe color red
+            flagItems.getChildren().add(rectangle); //add to flagItems
+            rectangleY += rectangleHeight * 2;      //changes y coordinate to next stripe height
+        }
+
+        // Create the blue rectangle of the flag
+        // Width = about half(2.1) flagWidth
+        // Height of blue rectangle * 7
+        Rectangle blueRectangle = new Rectangle(0, 0, flagWidth / 2.1, rectangleHeight * 7);
+        blueRectangle.setFill(Color.BLUE);          // set color to blue
+        flagItems.getChildren().add(blueRectangle); // add blueRectangle to flagItems group
+
+        //star width in proportion to blueRectangle
+        double starSize = blueRectangle.getWidth() / 11;
+        rectangleY = 20; //Y coordinate starting point - for first star to appear
+
+        for (int i = 0; i < 9; i++) {
+            int column;
+            rectangleX = 20; //X coordinate starting point
+
+            //adds 6 stars when even in the row, 5 when not
+            if (i % 2 == 0) {
+                column = 6;
+            } else {
+                column = 5;
+                rectangleX += starSize; // change X coordinate
+            }
+
+            //star creation using the Polygon class
+            for (int j = 0; j < column; j++) {
+                Polygon star = createStar(rectangleX, rectangleY, starSize / 3);
+                flagItems.getChildren().add(star);
+                rectangleX += starSize * 1.8;// distance between each star in row    - X coordinate
+            }
+            rectangleY += starSize / 1.3;    // distance between each star in column - Y coordinate
+        }
+
+        // Animation
+        Path path = new Path();                               // Creates the path for the movement
+        path.getElements().add(new MoveTo(680, 240));  // first value distance traveled horizontally
+        path.getElements().add(new LineTo(400, 240));  // (400) starting point in the window
+        PathTransition pathTransition = new PathTransition(); // Creates a path animation
+        pathTransition.setDuration(Duration.millis(100));     // Duration of the animation from start to finish
+        pathTransition.setPath(path);
+        pathTransition.setNode(flagItems);
+        pathTransition.setCycleCount(Timeline.INDEFINITE);    // Sets the animation to unlimited time.
+        pathTransition.setAutoReverse(true);                  // Animation auto-reverses point A -> B, B -> A
+        // controls with lambda expression
+        flagItems.setOnMouseClicked(e -> pathTransition.play()); // plays animation on mouse click
+        flagItems.setOnMouseDragged(e -> pathTransition.pause());// pauses animation when you hold and drag
+
+        Scene scene = new Scene(flagItems,1000, 500);// Add the flagItems to a scene container
+        primaryStage.setScene(scene);                       // Place the scene in the stage
+        primaryStage.setTitle("Practical Activity 1");      // Set the title of the window
+        Image flagIcon = new Image("americanflag.png");  // Create an image object
+        primaryStage.getIcons().add(flagIcon);              // Add the icon to the stage(window)
+        primaryStage.show();                                // Display the stage(window)
     }
 
     /**
-     * Creates a flag with two characters of your choice
-     * The row size of the flag is 46.
-     * The column size is 11.
+     * Method that creates a star from the Polygon class
      */
-    private static String createFlag(String firstString, String secondString) throws IllegalArgumentException {
-        if (firstString.length() >= 2 || secondString.length() >= 2)
-            throw new IllegalArgumentException("For a correct display use only single-character parameters.");
-        String space = " ";
+    private Polygon createStar(double centerX, double centerY, double size) {
+        Polygon star = new Polygon();
+        //end points lie on a Circle
+        int divisions = 360 / 5; // divide circle into 5 parts
+        int theta = -90;         // initial value - direction from the center
 
-        //Create an array to save values for future operations
-        String[] arrayAsteriskFirst = new String[12];
-        arrayAsteriskFirst[arrayAsteriskFirst.length - 1] = space; //space at the beginning of the secondString
-        for (int i = 0; i < 11; i++) {
-            if (i % 2 == 0) arrayAsteriskFirst[i] = firstString;
-            else arrayAsteriskFirst[i] = space;
+        // creates 10 points to form the star shape
+        while (star.getPoints().size() < 10) {
+            double starX = centerX + size * Math.cos(Math.toRadians(theta));
+            double starY = centerY + size * Math.sin(Math.toRadians(theta));
+            star.getPoints().addAll(starX, starY);
+            theta += 2 * divisions;
         }
-
-        //Create an array to save values for future operations
-        String[] arraySpaceFirst = new String[12];
-        arraySpaceFirst[arrayAsteriskFirst.length - 1] = space; //the space at the beginning of the secondString
-        for (int i = 0; i < 11; i++) {
-            if (i % 2 == 0) arraySpaceFirst[i] = space;
-            else arraySpaceFirst[i] = firstString;
-        }
-        //casts the Array into a String object, joins the array and removes the comma between every character
-        String evenLine = String.join("", arrayAsteriskFirst).replace(",", "")
-                + String.format("%40s", "").replace(" ", secondString);
-
-        //casts the Array into a String object, joins the array and removes the comma between every character
-        String oddLine = String.join("", arraySpaceFirst)
-                //converts empty space into the secondString
-                + String.format("%40s", "").replace(" ", secondString);
-        String fullSecondStringLine = String.format("%46s", "").replace(" ", secondString);
-        StringBuilder buffer = new StringBuilder(); //create a buffer to display the text
-        for (int i = 0; i < 16; i++) {
-            if (i % 2 == 0 & i < 9) buffer.append(evenLine).append("\n");
-
-            if (i % 2 != 0 & i < 9) buffer.append(oddLine).append("\n");
-            else if (i > 9) buffer.append(fullSecondStringLine).append("\n");
-        }
-        return buffer.toString(); // Casts the buffer to a String
-    }
-    public static void main(String[] args) {
-
-        launch(args);
+        star.setFill(Color.WHITE); // star Color
+        return star;
     }
 }
