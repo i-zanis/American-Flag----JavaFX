@@ -1,10 +1,18 @@
+import javafx.animation.FadeTransition;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.awt.*;
 
 /**
  * Name:        Ioannis Lafazanis
@@ -28,7 +36,7 @@ public class test extends Application {
         launch(args); // launches the Application
     }
 
-    @Override
+    @Override // start() is abstract and has to be overridden
     public void start(Stage primaryStage) {
         Group flagItems = new Group();
         int flagWidth = 800;
@@ -79,11 +87,31 @@ public class test extends Application {
             }
             rectangleY += starSize / 1.3;    // distance between each star in column - Y coordinate
         }
+        Image flagIcon = new Image("americanflag.png");// Create an image object
 
-        Scene scene = new Scene(flagItems);            // Add the flagItems to a scene container
-        primaryStage.setScene(scene);                  // Place the scene in the stage
-        primaryStage.setTitle("Practical Activity 1"); // Set the title of the window
-        primaryStage.show();                           // Display the stage(window)
+
+        Path path = new Path();
+        path.getElements().add(new MoveTo(450, 240));
+        path.getElements().add(new LineTo(400, 240));
+        PathTransition pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(2000));
+        pathTransition.setPath(path);
+        pathTransition.setNode(flagItems);
+        pathTransition.setCycleCount(Timeline.INDEFINITE);
+        pathTransition.setAutoReverse(true);
+        pathTransition.play();
+
+
+
+        flagItems.setOnMouseClicked(me -> pathTransition.play());
+
+
+
+        Scene scene = new Scene(flagItems);              // Add the flagItems to a scene container
+        primaryStage.setScene(scene);                    // Place the scene in the stage
+        primaryStage.setTitle("Practical Activity 1");   // Set the title of the window
+        primaryStage.getIcons().add(flagIcon);           // Add the icon to the stage(window)
+        primaryStage.show();                             // Display the stage(window)
     }
 
     /**
