@@ -94,8 +94,8 @@ public class Main extends Application {
 
         // Animation
         Path path = new Path();                               // Creates the path for the movement
-        path.getElements().add(new MoveTo(680, 240));  // first value distance traveled horizontally
-        path.getElements().add(new LineTo(400, 240));  // (400) starting point in the window
+        path.getElements().add(new MoveTo(680, 240));         // first value distance traveled horizontally
+        path.getElements().add(new LineTo(400, 240));         // (400) starting point in the window
         PathTransition pathTransition = new PathTransition(); // Creates a path animation
         pathTransition.setDuration(Duration.millis(100));     // Duration of the animation from start to finish
         pathTransition.setPath(path);
@@ -109,7 +109,7 @@ public class Main extends Application {
         Scene scene = new Scene(flagItems,1000, 500);// Add the flagItems to a scene container
         primaryStage.setScene(scene);                       // Place the scene in the stage
         primaryStage.setTitle("Practical Activity 1");      // Set the title of the window
-        Image flagIcon = new Image("americanflag.png");  // Create an image object
+        Image flagIcon = new Image("americanflag.png");     // Create an image object
         primaryStage.getIcons().add(flagIcon);              // Add the icon to the stage(window)
         primaryStage.show();                                // Display the stage(window)
     }
