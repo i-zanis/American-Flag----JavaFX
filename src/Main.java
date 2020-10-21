@@ -13,7 +13,7 @@ import javafx.util.Duration;
 
 /**
  * American Flag Graphic designed with basic geometry and horizontal animation created in JavaFX.
- * Horizontal animation on mouse press
+ * Horizontal animation on mouse press.
  * Pauses on mouse-dragging
  *
  *  * Name:          Ioannis Lafazanis
@@ -21,7 +21,7 @@ import javafx.util.Duration;
  *  * Course Code:   CP40061E - Programming
  *  * Date:          18/10/2020
  *  * Project Name:  Practical Activity 1
- *  * Module Leader: Dr Ikram Rehman
+ *  * Module Leader: Dr Ikram Ur Rehman
  *
  * Last year TKinter was presented in the lecture and I was overwhelmed.
  * This year I looked back to the slides and I smiled.
@@ -36,7 +36,6 @@ import javafx.util.Duration;
 
 public class Main extends Application {
     public static void main(String[] args) {
-
         launch(args); // launches the Application
     }
 
