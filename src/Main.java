@@ -13,7 +13,7 @@ import javafx.util.Duration;
 
 /**
  * American Flag Graphic designed with basic geometry and horizontal animation created in JavaFX.
- * Horizontal animation on mouse press
+ * Horizontal animation on mouse press.
  * Pauses on mouse-dragging
  *
  *  * Name:          Ioannis Lafazanis
@@ -21,7 +21,7 @@ import javafx.util.Duration;
  *  * Course Code:   CP40061E - Programming
  *  * Date:          18/10/2020
  *  * Project Name:  Practical Activity 1
- *  * Module Leader: Dr Ikram Rehman
+ *  * Module Leader: Dr Ikram Ur Rehman
  *
  * Last year TKinter was presented in the lecture and I was overwhelmed.
  * This year I looked back to the slides and I smiled.
@@ -36,7 +36,6 @@ import javafx.util.Duration;
 
 public class Main extends Application {
     public static void main(String[] args) {
-
         launch(args); // launches the Application
     }
 
@@ -94,8 +93,8 @@ public class Main extends Application {
 
         // Animation
         Path path = new Path();                               // Creates the path for the movement
-        path.getElements().add(new MoveTo(680, 240));  // first value distance traveled horizontally
-        path.getElements().add(new LineTo(400, 240));  // (400) starting point in the window
+        path.getElements().add(new MoveTo(680, 240));         // first value distance traveled horizontally
+        path.getElements().add(new LineTo(400, 240));         // (400) starting point in the window
         PathTransition pathTransition = new PathTransition(); // Creates a path animation
         pathTransition.setDuration(Duration.millis(100));     // Duration of the animation from start to finish
         pathTransition.setPath(path);
@@ -109,7 +108,7 @@ public class Main extends Application {
         Scene scene = new Scene(flagItems,1000, 500);// Add the flagItems to a scene container
         primaryStage.setScene(scene);                       // Place the scene in the stage
         primaryStage.setTitle("Practical Activity 1");      // Set the title of the window
-        Image flagIcon = new Image("americanflag.png");  // Create an image object
+        Image flagIcon = new Image("americanflag.png");     // Create an image object
         primaryStage.getIcons().add(flagIcon);              // Add the icon to the stage(window)
         primaryStage.show();                                // Display the stage(window)
     }
