@@ -42,9 +42,9 @@ public class Main extends Application {
         //create 7 red rectangles (stripes)
         for (int i = 0; i < 7; i++) {
             Rectangle rectangle = new Rectangle(rectangleX, rectangleY, flagWidth, rectangleHeight);
-            rectangle.setFill(Color.RED);           //stripe color red
-            flagItems.getChildren().add(rectangle); //add to flagItems
-            rectangleY += rectangleHeight * 2;      //changes y coordinate to next stripe height
+            rectangle.setFill(Color.RED);           // stripe color red
+            flagItems.getChildren().add(rectangle); // add to flagItems
+            rectangleY += rectangleHeight * 2;      // changes y coordinate to next stripe height
         }
 
         // Create the blue rectangle of the flag
