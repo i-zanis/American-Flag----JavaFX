@@ -95,7 +95,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(flagItems,1000, 500);// Add the flagItems to a scene container
         primaryStage.setScene(scene);                       // Place the scene in the stage
-        primaryStage.setTitle("Practical Activity 1");      // Set the title of the window
+        primaryStage.setTitle("American Flag");      // Set the title of the window
         Image flagIcon = new Image("americanflag.png");     // Create an image object
         primaryStage.getIcons().add(flagIcon);              // Add the icon to the stage(window)
         primaryStage.show();                                // Display the stage(window)
